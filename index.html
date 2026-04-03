@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Torch with Ads</title>
+
+  <!-- AdSense Script (replace with your real ID) -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX" crossorigin="anonymous"></script>
+  -->
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 10px;
+    }
+
+    /* Ads */
+    .ad-box {
+      background: #fff;
+      margin: 10px 0;
+      padding: 10px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Torch Area */
+    #torch-area {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #controls {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    #slider {
+      width: 100%;
+    }
+
+    #fullscreen-btn {
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #dim-layer {
+      position: fixed;
+      inset: 0;
+      background: black;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- TOP AD -->
+  <div class="ad-box">
+    <p>Advertisement</p>
+    <!-- AdSense unit here -->
+  </div>
+
+  <!-- TORCH AREA (ONLY THIS GOES FULLSCREEN) -->
+  <div id="torch-area">
+
+    <div id="controls">
+      <label>Brightness: <span id="val">100%</span></label>
+      <input type="range" id="slider" min="0" max="100" value="100">
+      <button id="fullscreen-btn">Full Torch</button>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM AD -->
+  <div class="ad-box">
+    <p>Advertisement</p>
+    <!-- AdSense unit here -->
+  </div>
+
+</div>
+
+<div id="dim-layer"></div>
+
+<script>
+  const slider = document.getElementById('slider');
+  const val = document.getElementById('val');
+  const dim = document.getElementById('dim-layer');
+  const fsBtn = document.getElementById('fullscreen-btn');
+  const torch = document.getElementById('torch-area');
+
+  // Brightness control
+  slider.addEventListener('input', () => {
+    const v = slider.value;
+    val.textContent = v + '%';
+    dim.style.opacity = (100 - v) / 100;
+  });
+
+  // Fullscreen only torch area
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      torch.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+</script>
+
+</body>
+</html>
